@@ -123,9 +123,11 @@
 // given font and degrees.
 //
 // Arguments:
-//   str: string to display
+//   top-str: string to display on the top of the circle
+//   bottom-str: string to display on the bottom of the circle
 //   width: Total width of the containing block
-//   degrees: Range of the top of the circle to place text
+//   top-degrees: Range of the top of the circle to place text
+//   bottom-degrees: Range of the top of the circle to place text
 //   show-design-aids: Shows design aids when true
 #let text-on-circle(top-str, bottom-str, width, top-degrees, bottom-degrees,
                     circle-background:black,
