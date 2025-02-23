@@ -10,12 +10,7 @@ This is a [Typst](https://github.com/typst/typst) package to position text aroun
 
 # Usage
 
-Letters are postioned via `place()` inside of a block container.  The block container has a width and height so that it affects the position of adjacent markup.
-
-The block container will be the size of the circle when using `text-on-circle()`, but will only include the text when using `text-on-arc()`.  This allows you to have a large circle on which the text is placed but not affect the flow.
-
 ## text-on-arc
-
 
 ```typst
 #text-on-arc(str, width, degrees,
@@ -72,3 +67,9 @@ given font and degrees.
                 circle-fill:rgb("#00529b"),
                 circle-margin:.3em)
 ```
+
+# Notes
+
+Letters are positioned via `place()` inside of a block container.  The block container has a width and height so that it affects the position of adjacent markup.
+
+The block container will be the size of the circle when using `text-on-circle()`, but will only include the text when using `text-on-arc()`.  This allows you to have a large circle on which the text is placed but not affect the flow.
