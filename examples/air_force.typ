@@ -17,7 +17,7 @@
       </g>
     </svg>```.text
 
-  set text(white, 13pt, font:"Helvetica Neue", weight:900)
+  set text(white, 13pt, weight:900)
   place(
     center+horizon,
     text-on-circle("UNITED STATES", "AIR FORCE", 1.8in, 117deg, 90deg,
