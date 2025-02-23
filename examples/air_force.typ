@@ -20,9 +20,19 @@
   set text(white, 13pt, font:"Helvetica Neue", weight:900)
   place(
     center+horizon,
-    text-on-circle("UNITED STATES", "AIR FORCE", 1.8in, 145deg, 90deg,
+    text-on-circle("UNITED STATES", "AIR FORCE", 1.8in, 117deg, 90deg,
                   show-design-aids:false,
                   circle-fill:rgb("#00529b"),
+                  circle-margin:.3em)
+  )
+
+  // Stars need to be bigger, so change the font size and draw again
+  set text(16pt)
+  place(
+    center+horizon,
+    text-on-circle("★ ★           ★ ★", "", 1.91in, 223deg, 0deg,
+                  show-design-aids:false,
+                  circle-fill:none, // don't overwrite the previous image
                   circle-margin:.3em)
   )
 
