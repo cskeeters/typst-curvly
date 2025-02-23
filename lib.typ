@@ -161,7 +161,7 @@
       )
 
       if show-design-aids {
-        let alignment-circle-radius=1pt
+        let alignment-circle-radius=.023em
         place(
           bottom,
           dx: x+50%-alignment-circle-radius,
@@ -263,7 +263,7 @@
       )
 
       if show-design-aids {
-        let alignment-circle-radius=0.4pt
+        let alignment-circle-radius=.023em
         place(
           top,
           dx: x+50%-alignment-circle-radius,
@@ -308,7 +308,7 @@
       )
 
       if show-design-aids {
-        let alignment-circle-radius=0.4pt
+        let alignment-circle-radius=.023em
         place(
           top,
           dx: x+50%-alignment-circle-radius,
