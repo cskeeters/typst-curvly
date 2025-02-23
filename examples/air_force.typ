@@ -31,7 +31,6 @@
   place(
     center+horizon,
     text-on-circle("★ ★              ★ ★", "", 1.91in, 220deg, 0deg,
-                  show-design-aids:false,
                   circle-fill:none, // don't overwrite the previous image
                   circle-margin:.3em)
   )
