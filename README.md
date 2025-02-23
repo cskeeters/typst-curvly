@@ -18,6 +18,7 @@ The block container will be the size of the circle when using `text-on-circle()`
 ```typst
 #text-on-arc(str, width, degrees,
              rotate-letters:true,
+             equidistant: false,
              show-design-aids:false,
              font-letter-spacing: 0pt)
 ```
@@ -28,6 +29,7 @@ Positions text on the top portion of a circle.  Height increases as required giv
  * **width**: Total width of the containing block
  * **degrees**: Range of the top of the circle to place text
  * **rotate-letters**: rotate letters to match tangent of the circle
+ * **equidistant**: Separate characters evenly rather than account for char widths
  * **show-design-aids**: Shows design aids when true
  * **font-letter-spacing**: Manual adjustment for letter spacing built into font
 
@@ -45,6 +47,7 @@ Positions text on the top portion of a circle.  Height increases as required giv
                 circle-background:black,
                 circle-fill:none,
                 circle-margin:0pt,
+                equidistant: false,
                 show-design-aids:false)
 ```
 
@@ -56,6 +59,7 @@ given font and degrees.
  * **width**: Total width of the containing block
  * **top-degrees**: Range of the top of the circle to place text
  * **bottom-degrees**: Range of the bottom of the circle to place text
+ * **equidistant**: Separate characters evenly rather than account for char widths
  * **show-design-aids**: Shows design aids when true
 
 **Example Usage**:

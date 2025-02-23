@@ -1,3 +1,46 @@
+// Distribute letters equally
+#let get-percents(length) = {
+  if length == 1 {
+    return (.5,) // If only one character, place in the middle
+  }
+  let indices = range(length)
+  return indices.map(i => i / (length - 1))
+}
+
+// Calculate placement percents based on character widths
+#let get-percents-char-width(chars, radius, degrees) = {
+  if chars.len() == 1 {
+    return (.5,) // If only one character, place in the middle
+  }
+  let widths = chars.map(c => measure(c).width)
+  // let widths = chars.map(c => 0pt)
+  let half-widths = widths.map(w => w/2)
+  let half-angles = half-widths.map(hw => calc.atan2(radius.to-absolute().pt(), hw.pt()))
+
+  let remaining-angle = degrees
+  for i in range(half-angles.len()) {
+    if i == 0 {
+      remaining-angle -= half-angles.at(i) // only sub half of the first char
+    } else if i == half-angles.len() -1 {
+      remaining-angle -= half-angles.at(i) // only sub half of the last char
+    } else {
+      remaining-angle -= half-angles.at(i)*2
+    }
+  }
+
+  let inter-char-angle = remaining-angle / (chars.len() - 1)
+
+  let cur-angle-offset = 0deg
+  let angle-offsets = (cur-angle-offset,) // Comma makes a list
+  for i in range(1, chars.len()) {
+    cur-angle-offset += half-angles.at(i - 1) + inter-char-angle + half-angles.at(i)
+    angle-offsets.push(cur-angle-offset)
+  }
+
+  // percent is float from [0, 1].  Will be used for text rotation too
+  return angle-offsets.map(ao => ao / degrees)
+}
+
 // Positions text on the top portion of a circle.  Height increases as required
 // given font and degrees.
 //
@@ -6,10 +49,12 @@
 //   width: Total width of the containing block
 //   degrees: Range of the top of the circle to place text
 //   rotate-letters: rotate letters to match tangent of the circle
+//   equidistant: Separate characters evenly rather than account for char widths
 //   show-design-aids: Shows design aids when true
 //   font-letter-spacing: Manual adjustment for letter spacing built into font
 #let text-on-arc(str, width, degrees,
                  rotate-letters:true,
+                 equidistant:false,
                  show-design-aids:false,
                  font-letter-spacing: 0pt) = context {
 
@@ -78,14 +123,17 @@
 
 
     // Convert string to array of chars (Support unicode characters)
+    // ...otherwise str.at returns UTF-8 bytes
     let chars = str.matches(regex(".")).map(m => m.text)
+
+    let percents = get-percents(chars.len())
+    if not equidistant {
+      percents = get-percents-char-width(chars, radius, degrees)
+    }
 
     let n = chars.len()
     for i in range(n) {
-      let percent = .5
-      if (n > 1) {
-        percent = i / (n - 1)
-      }
+      let percent = percents.at(i)
 
       let  pos-angle = percent * degrees + (start-angle)
       let text-angle = percent * degrees + (text-start-angle)
@@ -128,11 +176,13 @@
 //   width: Total width of the containing block
 //   top-degrees: Range of the top of the circle to place text
 //   bottom-degrees: Range of the top of the circle to place text
+//   equidistant: Separate characters evenly rather than account for char widths
 //   show-design-aids: Shows design aids when true
 #let text-on-circle(top-str, bottom-str, width, top-degrees, bottom-degrees,
                     circle-background:black,
                     circle-fill:none,
                     circle-margin:0pt,
+                    equidistant:false,
                     show-design-aids:false) = context {
 
   let m = measure[M] // pic a good letter
@@ -168,15 +218,19 @@
     }
 
 
+    // Convert string to array of chars (Support unicode characters)
+    // ...otherwise str.at returns UTF-8 bytes
     let top-chars = top-str.matches(regex(".")).map(m => m.text)
+
+    let percents = get-percents(top-chars.len())
+    if not equidistant {
+      percents = get-percents-char-width(top-chars, radius, top-degrees)
+    }
 
     // Place Top Text
     let n = top-chars.len()
     for i in range(n) {
-      let percent = .5
-      if (n > 1) {
-        percent = i / (n - 1)
-      }
+      let percent = percents.at(i)
 
       // Orient angles where 0deg is left Cartesian coordinate system
       let start-angle = 90deg - top-degrees/2
@@ -185,8 +239,10 @@
       let text-start-angle = -top-degrees/2
 
 
-      let  pos-angle = percent * top-degrees + (start-angle)
-      let text-angle = percent * top-degrees + (text-start-angle)
+      let  pos-angle = percent * top-degrees + start-angle
+      let text-angle = percent * top-degrees + text-start-angle
+
+      pos-angle = percent * top-degrees + start-angle
 
       let x = -radius * calc.cos(pos-angle)
       let y = -radius * calc.sin(pos-angle)
@@ -200,32 +256,35 @@
       )
 
       if show-design-aids {
-        let alignment-circle-radius=1pt
+        let alignment-circle-radius=0.4pt
         place(
           top,
           dx: x+50%-alignment-circle-radius,
-          dy: circle-margin + y + radius + cap-height - alignment-circle-radius/2,
+          dy: circle-margin + y + radius + cap-height - alignment-circle-radius,
           circle(radius:alignment-circle-radius, stroke:none, fill:black)
         )
       }
     }
 
+    // Convert string to array of chars (Support unicode characters)
+    // ...otherwise str.at returns UTF-8 bytes
     let bottom-chars = bottom-str.matches(regex(".")).map(m => m.text)
+
+    let percents = get-percents(bottom-chars.len())
+    if not equidistant {
+      percents = get-percents-char-width(bottom-chars, radius, bottom-degrees)
+    }
 
     // Place Bottom Text
     let n = bottom-chars.len()
     for i in range(n) {
-      let percent = .5
-      if (n > 1) {
-        percent = i / (n - 1)
-      }
+      let percent = percents.at(i)
 
       // Orient angles where 0deg is left Cartesian coordinate system
       let start-angle = 270deg + bottom-degrees/2
 
       // Orient angles where 0deg is up for text rotation
       let text-start-angle = bottom-degrees/2
-
 
       let  pos-angle = -percent * bottom-degrees + (start-angle)
       let text-angle = -percent * bottom-degrees + (text-start-angle)
@@ -242,11 +301,11 @@
       )
 
       if show-design-aids {
-        let alignment-circle-radius=1pt
+        let alignment-circle-radius=0.4pt
         place(
           top,
           dx: x+50%-alignment-circle-radius,
-          dy: circle-margin + y + radius + cap-height - alignment-circle-radius/2,
+          dy: circle-margin + y + radius + cap-height - alignment-circle-radius,
           circle(radius:alignment-circle-radius, stroke:none, fill:black)
         )
       }
