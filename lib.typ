@@ -77,7 +77,10 @@
     }
 
 
-    let n = str.len()
+    // Convert string to array of chars (Support unicode characters)
+    let chars = str.matches(regex(".")).map(m => m.text)
+
+    let n = chars.len()
     for i in range(n) {
       let percent = .5
       if (n > 1) {
@@ -90,15 +93,15 @@
       let x = -radius * calc.cos(pos-angle)
       let y = -radius * calc.sin(pos-angle)
 
-      let cur = measure(str.at(i))
+      let cur = measure(chars.at(i))
       place(
         bottom,
         dx: x+50% - (cur.width/2),
         dy: y + y-offset - y-char-offset,
         if rotate-letters {
-          rotate(text-angle, origin:bottom, str.at(i))
+          rotate(text-angle, origin:bottom, chars.at(i))
         } else {
-          str.at(i)
+          chars.at(i)
         }
       )
 
@@ -162,8 +165,11 @@
       )
     }
 
+
+    let top-chars = top-str.matches(regex(".")).map(m => m.text)
+
     // Place Top Text
-    let n = top-str.len()
+    let n = top-chars.len()
     for i in range(n) {
       let percent = .5
       if (n > 1) {
@@ -183,12 +189,12 @@
       let x = -radius * calc.cos(pos-angle)
       let y = -radius * calc.sin(pos-angle)
 
-      let cur = measure(top-str.at(i))
+      let cur = measure(top-chars.at(i))
       place(
         top,
         dx: x+50% - (cur.width/2),
         dy: y + radius + circle-margin,
-        rotate(text-angle, origin:bottom, top-str.at(i))
+        rotate(text-angle, origin:bottom, top-chars.at(i))
       )
 
       if show-design-aids {
@@ -202,8 +208,10 @@
       }
     }
 
+    let bottom-chars = bottom-str.matches(regex(".")).map(m => m.text)
+
     // Place Bottom Text
-    let n = bottom-str.len()
+    let n = bottom-chars.len()
     for i in range(n) {
       let percent = .5
       if (n > 1) {
@@ -223,12 +231,12 @@
       let x = -(radius+cap-height) * calc.cos(pos-angle)
       let y = -(radius+cap-height) * calc.sin(pos-angle)
 
-      let cur = measure(bottom-str.at(i))
+      let cur = measure(bottom-chars.at(i))
       place(
         top,
         dx: x+50% - (cur.width/2),
         dy: y + radius + circle-margin,
-        rotate(text-angle, origin:bottom, bottom-str.at(i))
+        rotate(text-angle, origin:bottom, bottom-chars.at(i))
       )
 
       if show-design-aids {
