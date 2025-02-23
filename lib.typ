@@ -1,5 +1,8 @@
 // Distribute letters equally
 #let get-percents(length) = {
+  if length == 0 {
+    return ()
+  }
   if length == 1 {
     return (.5,) // If only one character, place in the middle
   }
@@ -9,6 +12,10 @@
 
 // Calculate placement percents based on character widths
 #let get-percents-char-width(chars, radius, degrees) = {
+  if chars.len() == 0 {
+    return ()
+  }
+
   if chars.len() == 1 {
     return (.5,) // If only one character, place in the middle
   }
