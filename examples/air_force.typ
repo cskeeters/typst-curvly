@@ -22,7 +22,6 @@
     center+horizon,
     text-on-circle("UNITED STATES", "AIR FORCE", 1.8in, 145deg, 90deg,
                   show-design-aids:false,
-                  // circle-fill:black,
                   circle-fill:rgb("#00529b"),
                   circle-margin:.3em)
   )
