@@ -13,7 +13,7 @@
   set text(maroon, 15pt, font:"Baskerville", weight:900)
   place(
     center+horizon,
-    text-on-circle("TEXSAS AGGIES", "OL' SARGE", 1.8in, 163deg, 99deg,
+    text-on-circle("TEXAS AGGIES", "OL' SARGE", 1.8in, 163deg, 99deg,
                   show-design-aids:false,
                   // circle-fill:black,
                   // circle-fill:rgb("#00529b"),
