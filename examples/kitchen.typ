@@ -35,7 +35,7 @@
 
     parbreak()
 
-    v(94pt)
+    v(118pt)
     text(40pt, font:"OLD SPORT 02 ATHLETIC NCV", tracking:5pt)[STAYS IN THE KITCHEN]
   })
 }
