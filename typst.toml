@@ -8,3 +8,4 @@ description = "Typst package for curving text on an arc or circle"
 repository = "https://github.com/cskeeters/typst-curvly"
 categories = ["layout"]
 compiler = "0.12.0"
+exclude = ["examples"]
