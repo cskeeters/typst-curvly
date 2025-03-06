@@ -2,5 +2,5 @@
 
 # Each image is 2in x 2x, so 200 ppi will give 400x400 pixels
 typst compile -f png --ppi 200 air_force.typ
-typst compile -f png --ppi 200 live_fit.typ
-typst compile -f png --ppi 200 ol_sarge.typ
+typst compile -f png --ppi 200 fitness.typ
+typst compile -f png --ppi 40 kitchen.typ

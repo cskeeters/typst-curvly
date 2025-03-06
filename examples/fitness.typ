@@ -12,10 +12,10 @@
 
     set par(spacing:0pt)
     set text(15pt, font:"Oswald")
-    text-on-arc("LIVE FIT", 105pt, 43deg)
+    text-on-arc("FITNESS", 105pt, 43deg)
 
     v(-2pt) // Space USC a bit inside of the block
-    text(rgb("#990000"), .7em, font:"Big Caslon")[USC]
+    text(rgb("#990000"), .7em, font:"Big Caslon")[CWS]
 
     set text(15pt, font:"Oswald", weight:900)
     set par(spacing:8pt)
@@ -28,12 +28,12 @@
       columns: (auto, auto, auto),
       column-gutter: 9pt,
 
-      text(.3em)[00],
+      text(.3em)[19],
       [DEPT],
-      text(.3em)[12],
+      text(.3em)[78],
     )
 
-    text(.3em)[LA CA USA]
+    text(.3em)[SA TX USA]
 
   })
 }
