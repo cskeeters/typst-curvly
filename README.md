@@ -3,9 +3,11 @@ This is a [Typst](https://github.com/typst/typst) package to position text aroun
 # Demo
 
 <p float="left">
-    <img src="examples/kitchen.svg"  width="180"/>
-    <img src="examples/fitness.svg"  width="180"/>
-    <img src="examples/air_force.svg" width="180"/>
+    <img src="examples/kitchen.svg"  width="250"/>
+    <img src="examples/fitness.svg"  width="250"/>
+    <br>
+    <img src="examples/award.svg"  width="250"/>
+    <img src="examples/air_force.svg" width="250"/>
 </p>
 
 # Usage
