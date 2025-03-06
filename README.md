@@ -3,9 +3,9 @@ This is a [Typst](https://github.com/typst/typst) package to position text aroun
 # Demo
 
 <p float="left">
-    <img src="examples/kitchen.png"  width="200"/>
-    <img src="examples/fitness.png"  width="200"/>
-    <img src="examples/air_force.png" width="200"/>
+    <img src="examples/kitchen.svg"  width="180"/>
+    <img src="examples/fitness.svg"  width="180"/>
+    <img src="examples/air_force.svg" width="180"/>
 </p>
 
 # Usage

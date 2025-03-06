@@ -1,6 +1,6 @@
 #!/bin/sh
 
 # Each image is 2in x 2x, so 200 ppi will give 400x400 pixels
-typst compile -f png --ppi 200 air_force.typ
-typst compile -f png --ppi 200 fitness.typ
-typst compile -f png --ppi 40 kitchen.typ
+typst compile -f svg --ppi 200 air_force.typ
+typst compile -f svg --ppi 200 fitness.typ
+typst compile -f svg --ppi 40 kitchen.typ
