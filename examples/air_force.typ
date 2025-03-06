@@ -41,7 +41,7 @@
   align(center+horizon,
     box(fill:none, clip: false, stroke: none, radius: circle/2,
         width: circle, height: circle,
-        image.decode(airforce-logo-svg, height:87pt)
+        image(bytes(airforce-logo-svg), height:87pt)
     )
   )
 }
