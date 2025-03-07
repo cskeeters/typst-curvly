@@ -36,7 +36,7 @@ Positions text on the top portion of a circle.  Height increases as required giv
 
 ```typst
 #set text(15pt, font:"Oswald")
-#text-on-arc("LIVE FIT", 105pt, 43deg)
+#text-on-arc("FITNESS", 105pt, 43deg)
 ```
 
 ## text-on-circle
@@ -64,8 +64,7 @@ given font and degrees.
 **Example Usage**:
 
 ```typst
-#set text(white, 13pt, font:"Helvetica Neue", weight:900)
-#text-on-circle("UNITED STATES", "AIR FORCE", 1.8in, 145deg, 90deg,
+#text-on-circle("ATLANTIS", "AIR FORCE", 1.8in, 117deg, 90deg,
                 circle-fill:rgb("#00529b"),
                 circle-margin:.3em)
 ```
