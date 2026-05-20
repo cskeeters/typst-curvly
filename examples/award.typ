@@ -1,5 +1,5 @@
 #{
-  import "@preview/curvly:0.1.0": *
+  import "@preview/curvly:0.2.0": *
 
   set page(
     width:2in,

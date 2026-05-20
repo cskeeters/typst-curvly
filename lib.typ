@@ -173,6 +173,37 @@
   })
 }
 
+// For the ring to potentially have a transparent middle, we have to create a path with curve.
+// This could also be done with cetz's compound-path, but I don't really want a dependency for this
+#let ring(inner-radius: 30pt, outer-radius: 50pt, fill: black, stroke: none) = {
+  let k = 0.5523
+
+  // Control point offsets for each circle
+  let oi = inner-radius * k
+  let oo = outer-radius * k
+
+  curve(
+    fill: fill,
+    fill-rule: "even-odd",
+    stroke: stroke,
+
+    // Outer circle (clockwise from top)
+    curve.move((0pt, -outer-radius)),
+    curve.cubic((oo, -outer-radius), (outer-radius, -oo), (outer-radius, 0pt)),
+    curve.cubic((outer-radius, oo), (oo, outer-radius), (0pt, outer-radius)),
+    curve.cubic((-oo, outer-radius), (-outer-radius, oo), (-outer-radius, 0pt)),
+    curve.cubic((-outer-radius, -oo), (-oo, -outer-radius), (0pt, -outer-radius)),
+    curve.close(mode: "straight"),
+
+    // Inner circle (counter-clockwise from top, creates the hole)
+    curve.move((0pt, -inner-radius)),
+    curve.cubic((-oi, -inner-radius), (-inner-radius, -oi), (-inner-radius, 0pt)),
+    curve.cubic((-inner-radius, oi), (-oi, inner-radius), (0pt, inner-radius)),
+    curve.cubic((oi, inner-radius), (inner-radius, oi), (inner-radius, 0pt)),
+    curve.cubic((inner-radius, -oi), (oi, -inner-radius), (0pt, -inner-radius)),
+    curve.close(mode: "straight"),
+  )
+}
 
 // Positions text on the top portion of a circle.  Height increases as required
 // given font and degrees.
@@ -212,16 +243,32 @@
   // The container for the text
   block(fill: block-fill, width:containing-block-width, height:containing-block-height, {
 
-    if ring-fill != none {
-      // Outer circle
+    if inner-background == none {
+
+      let inner-radius = radius - circle-margin
+      let outer-radius = radius + circle-margin + cap-height
+      // Draw Ring with compound-path so center is transparent
       place(
         top + left,
-        dx: 0pt,
-        circle(fill:ring-fill, stroke:none, radius:radius + circle-margin + cap-height)
+        dx: outer-radius,
+        dy: outer-radius,
+        ring(
+          inner-radius: inner-radius,
+          outer-radius: outer-radius,
+          fill: ring-fill,
+        )
       )
-    }
 
-    if inner-background != none {
+    } else {
+      if ring-fill != none {
+        // Outer circle
+        place(
+          top + left,
+          dx: 0pt,
+          circle(fill:ring-fill, stroke:none, radius:radius + circle-margin + cap-height)
+        )
+      }
+
       // Inner Circle
       place(
         top + left,
@@ -230,7 +277,6 @@
         circle(fill:inner-background, stroke:none, radius:radius - circle-margin)
       )
     }
-
 
     // Convert string to array of chars (Support unicode characters)
     // ...otherwise str.at returns UTF-8 bytes
