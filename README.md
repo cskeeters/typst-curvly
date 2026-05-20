@@ -58,6 +58,9 @@ given font and degrees.
  * **width**: Total width of the containing block
  * **top-degrees**: Range of the top of the circle to place text
  * **bottom-degrees**: Range of the bottom of the circle to place text
+ * **ring-fill**: color of the ring that text will be placed on
+ * **inner-background**: color (or none for transparent) of the space inside the ring
+ * **circle-margin**: Margin between text and inside/outside edge of ring (ring thickness)
  * **equidistant**: Separate characters evenly rather than account for char widths
  * **show-design-aids**: Shows design aids when true
 

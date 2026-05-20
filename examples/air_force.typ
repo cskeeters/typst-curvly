@@ -206,7 +206,7 @@ z"/>
     center+horizon,
     text-on-circle("ATLANTIS", "AIR FORCE", 1.8in, 117deg, 90deg,
                   show-design-aids:false,
-                  circle-fill:rgb("#00529b"),
+                  ring-fill:rgb("#00529b"),
                   circle-margin:.3em)
   )
 
@@ -215,7 +215,8 @@ z"/>
   place(
     center+horizon,
     text-on-circle("★ ★              ★ ★", "", 1.91in, 220deg, 0deg,
-                  circle-fill:none, // don't overwrite the previous image
+                  ring-fill:none, // don't overwrite the previous image
+                  inner-background:none,
                   circle-margin:.3em)
   )
 

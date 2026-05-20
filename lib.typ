@@ -183,12 +183,15 @@
 //   width: Total width of the containing block
 //   top-degrees: Range of the top of the circle to place text
 //   bottom-degrees: Range of the top of the circle to place text
+//   ring-fill: color of the ring that text will be placed on
+//   inner-background: color (or none for transparent) of the space inside the ring
+//   circle-margin: Margin between text and inside/outside edge of ring (ring thickness)
 //   equidistant: Separate characters evenly rather than account for char widths
 //   show-design-aids: Shows design aids when true
 #let text-on-circle(top-str, bottom-str, width, top-degrees, bottom-degrees,
-                    circle-background:black,
-                    circle-fill:none,
-                    circle-margin:0pt,
+                    ring-fill:white,
+                    inner-background:white,
+                    circle-margin:.3em,
                     equidistant:false,
                     show-design-aids:false) = context {
 
@@ -209,18 +212,22 @@
   // The container for the text
   block(fill: block-fill, width:containing-block-width, height:containing-block-height, {
 
-    if circle-fill != none {
+    if ring-fill != none {
+      // Outer circle
       place(
         top + left,
         dx: 0pt,
-        circle(fill:circle-fill, stroke:none, radius:radius + circle-margin + cap-height)
+        circle(fill:ring-fill, stroke:none, radius:radius + circle-margin + cap-height)
       )
+    }
 
+    if inner-background != none {
+      // Inner Circle
       place(
         top + left,
         dx: 2*circle-margin+cap-height,
         dy: 2*circle-margin+cap-height,
-        circle(fill:white, stroke:none, radius:radius - circle-margin)
+        circle(fill:inner-background, stroke:none, radius:radius - circle-margin)
       )
     }
 
