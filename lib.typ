@@ -166,9 +166,7 @@
 
       if max > max-letter-distance / 1pt {
         let reduce-by = max / (max-letter-distance / 1pt)
-        percents = percents.map(x => x / reduce-by)
-        max = calc.max(..percents)
-        percents = percents.map(x => 0.5 - max / 2 + x)
+        percents = percents.map(x => 0.5 + (x - 0.5) / reduce-by)
         coords = percents.map(letter-placement)
       }
     }
