@@ -59,11 +59,13 @@
 //   equidistant: Separate characters evenly rather than account for char widths
 //   show-design-aids: Shows design aids when true
 //   font-letter-spacing: Manual adjustment for letter spacing built into font
+//   max-letter-distance: Maximal distance between two letters
 #let text-on-arc(str, width, degrees,
                  rotate-letters:true,
                  equidistant:false,
                  show-design-aids:false,
-                 font-letter-spacing: 0pt) = context {
+                 font-letter-spacing: 0pt,
+                 max-letter-distance: 0pt) = context {
 
   if degrees == 0 {
     panic("degrees must be greater than 0 otherwise circle would be infinitely large")
@@ -133,21 +135,44 @@
     // ...otherwise str.at returns UTF-8 bytes
     let chars = str.matches(regex(".")).map(m => m.text)
 
-    let percents = get-percents(chars.len())
-    if not equidistant {
-      percents = get-percents-char-width(chars, radius, degrees)
+    let percents = if equidistant {
+      get-percents(chars.len())
+    } else {
+      get-percents-char-width(chars, radius, degrees)
     }
 
-    let n = chars.len()
-    for i in range(n) {
-      let percent = percents.at(i)
-
-      let  pos-angle = percent * degrees + (start-angle)
+    // calculate (x, y, angle) for each letter
+    let letter-placement = percent => {
+      let pos-angle = percent * degrees + (start-angle)
       let text-angle = percent * degrees + (text-start-angle)
-
       let x = -radius * calc.cos(pos-angle)
       let y = -radius * calc.sin(pos-angle)
+      (x, y, text-angle)
+    }
+    
+    let n = chars.len()
+    let coords = percents.map(letter-placement)
+    
+    if max-letter-distance > 0pt and n >= 2 {
+      // get maximum distance between two letters
+      // then divide by the ratio to the requested maximum letter distance (if needed)
+      let max = calc.max(..range(chars.len() - 1).map(i => {
+        let (x1, y1, _) = coords.at(i)
+        let (x2, y2, _) = coords.at(i + 1)
+        let dx = (x2 - x1) / 1pt
+        let dy = (y2 - y1) / 1pt
+        calc.sqrt(dx * dx + dy * dy)
+      }))
 
+      if max > max-letter-distance / 1pt {
+        let reduce-by = max / (max-letter-distance / 1pt)
+        percents = percents.map(x => 0.5 + (x - 0.5) / reduce-by)
+        coords = percents.map(letter-placement)
+      }
+    }
+
+    for i in range(n) {
+      let (x, y, text-angle) = coords.at(i)
       let cur = measure(chars.at(i))
       place(
         bottom,
